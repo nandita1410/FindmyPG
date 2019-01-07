@@ -1,0 +1,27 @@
+{% extends 'owner/base.html' %}
+
+
+{% block main %}
+        <div class="content">
+            <div class="container-fluid">
+            	<table class="table">
+            		<tr>
+            			<td>Id</td>
+                        <td>Name</td>
+                        <td>Email</td>
+                        <td>Phone</td>
+	            		<td>Message</td>	            		
+            		</tr> 
+                  {% for enquiry in enquiries %}
+            		<tr>
+            			<td>{{enquiry.id}}</td>
+                        <td>{{enquiry.name}}</td>
+                        <td>{{enquiry.email}}</td>
+                        <td>{{enquiry.phone}}</td>
+            			<td>{{enquiry.message}}</td>
+            		</tr>           	
+                {% endfor %}
+            	</table>            	
+            </div>
+        </div>
+{% endblock %}

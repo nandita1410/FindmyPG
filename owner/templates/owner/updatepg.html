@@ -1,0 +1,285 @@
+{% extends 'owner/base.html' %}
+
+{% load static %}
+
+
+{% block main %}
+<div class="content">
+<div class="container-fluid">
+<div class="col-lg-8 col-md-offset-2">
+<div class="card">
+<div class="header">
+<h4 class="title">Edit Property Details</h4>
+</div>
+<div class="content">
+<form method="post" enctype="multipart/form-data">
+
+{% csrf_token %}
+
+<div class="alert alert-danger" id="error-box">
+	<h3>Please correct following errors:</h3>
+	<ul>
+	</ul>
+</div>
+
+
+{% if success %}
+<div class="alert alert-success">
+    <label style="color:white;">Congratulations! Property Updated successfully</label>
+</div>
+{% endif %}
+
+
+<div class="row">
+<div class="col-lg-12">
+<div class="form-group">
+    <label>Address</label>
+    <input id="address" type="text" name="address" class="form-control border-input" placeholder="Address" value="{{pg.address}}">
+</div>
+</div>
+</div>
+
+<div class="row">
+<div class="col-lg-4">
+<div class="form-group">
+    <label>Location</label>
+    <input id="location" type="text" name="location" class="form-control border-input" placeholder="Location" value="{{pg.location}}">
+</div>
+</div>	
+<div class="col-md-4">
+<div class="form-group">
+    <label>City</label>
+    <input id="city" type="text" name="city" class="form-control border-input" placeholder="City" value="{{pg.city}}">
+</div>
+</div>
+<div class="col-md-4">
+<div class="form-group">
+    <label>Pin Code</label>
+    <input id="pincode" type="text" name="pin" class="form-control border-input" placeholder="ZIP Code" value="{{pg.pin}}">
+</div>
+</div>
+</div>
+
+
+<div class="row">
+	<div class="col-md-4">
+		<div class="form-group">
+		    <label>For</label>
+		    <input id="gender" type="text" name="gender" class="form-control border-input" placeholder="Boy/Girl" value="{{pg.forgender}}">
+		</div>
+	</div>
+
+	<div class="col-md-4">
+		<div class="form-group">
+		    <label>Occupancy</label>
+		    <input id="occupancy" type="text" name="occupancy" class="form-control border-input" placeholder="Occupancy" value="{{pg.occupancy}}">
+		</div>
+	</div>
+
+	<div class="col-md-4">
+		<div class="form-group">
+		    <label>Rent</label>
+		    <input id="rent" type="text" name="rent" class="form-control border-input" placeholder="Rent" value="{{pg.rent}}">
+		</div>
+	</div>
+</div>
+
+
+
+
+<div class="row">
+	<div class="col-md-6">
+		<div class="form-group">
+		    <label>Size</label>
+		    <input id="size" type="number" name="size" class="form-control border-input" placeholder="Room Area"value="{{pg.size}}">
+		</div>
+
+	</div>
+	<div class="col-md-6">
+		<div class="form-group">
+		    <label>No. of Rooms</label>
+		    <input id="rooms" type="number" name="rooms" class="form-control border-input" placeholder="#Rooms" value="{{pg.rooms}}">
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="form-group">
+		    <label>Ameneties</label>
+		    <div class="row">
+			    <div class="col-md-3">
+				    <div class="checkbox checkbox-inline">
+				    	{% if ameneties.ac %}
+					    <input type="checkbox" name="ac">
+					    {% else %}
+					    <input type="checkbox" name="ac" checked>
+					 	{% endif %}
+					    <label>AC</label>
+					</div>
+				</div>
+			    <div class="col-md-3">
+				    <div class="checkbox checkbox-inline">
+				    	{% if ameneties.watercooler %}
+					    <input type="checkbox" name="watercooler">
+					    {% else %}
+					    <input type="checkbox" name="watercooler" checked>
+					 	{% endif %}
+					    <label>Water Cooler</label>
+					</div>
+				</div>
+			    <div class="col-md-3">
+				    <div class="checkbox checkbox-inline">
+				    	{% if ameneties.waterpurifier %}
+					    <input type="checkbox" name="waterpurifier">
+					    {% else %}
+					    <input type="checkbox" name="waterpurifier" checked>
+					 	{% endif %}
+					    <label>Water Purifier</label>
+					</div>
+				</div>
+			    <div class="col-md-3">
+				    <div class="checkbox checkbox-inline">
+				    	{% if ameneties.geyser %}
+					    <input type="checkbox" name="geyser">
+					    {% else %}
+					    <input type="checkbox" name="geyser" checked>
+					 	{% endif %}
+					    <label>Geyser</label>
+					</div>
+				</div>
+			</div>
+		    <div class="row">
+			    <div class="col-md-3">
+				    <div class="checkbox checkbox-inline">
+				    	{% if ameneties.furniture %}
+					    <input type="checkbox" name="furniture">
+					    {% else %}
+					    <input type="checkbox" name="furniture" checked>
+					 	{% endif %}
+					    <label>Furniture</label>
+					</div>
+				</div>
+			    <div class="col-md-3">
+				    <div class="checkbox checkbox-inline">
+				    	{% if ameneties.wifi %}
+					    <input type="checkbox" name="wifi">
+					    {% else %}
+					    <input type="checkbox" name="wifi" checked>
+					 	{% endif %}
+					    <label>Wifi</label>
+					</div>
+				</div>
+			    <div class="col-md-3">
+				    <div class="checkbox checkbox-inline">
+				    	{% if ameneties.meals %}
+					    <input type="checkbox" name="meals">
+					    {% else %}
+					    <input type="checkbox" name="meals" checked>
+					 	{% endif %}
+					    <label>Meals</label>
+					</div>
+				</div>
+			    <div class="col-md-3">
+				    <div class="checkbox checkbox-inline">
+				    	{% if ameneties.parking %}
+					    <input type="checkbox" name="parking">
+					    {% else %}
+					    <input type="checkbox" name="parking" checked>
+					 	{% endif %}
+					    <label>Parking</label>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>	
+</div>
+
+
+<div class="text-center">
+<button id="submit" type="submit" class="btn btn-info btn-fill btn-wd">Save Property</button>
+</div>
+<div class="clearfix"></div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<script src="{% static 'owner/js/jquery-1.10.2.js' %}" type="text/javascript"></script>
+ 
+<script type="text/javascript">
+	$(function() {
+
+	$('#error-box').hide();
+
+	$('#submit').click(function(e){
+		isvalid=true;
+		$('#error-box ul').html('');
+
+        if($('#address').val()=="")
+        {
+        	$('#error-box ul').append('<li style="color:white;display:block;">Address is required!</li>');
+        	isvalid=false;        	        	
+        }
+        if($('#location').val()=="")
+        {
+        	$('#error-box ul').append('<li style="color:white;display:block;">Location is required!</li>');
+        	isvalid=false;        	        	
+        }
+        if($('#city').val()=="")
+        {
+        	$('#error-box ul').append('<li style="color:white;display:block;">City is required!</li>');
+        	isvalid=false;        	        	
+        }
+        if($('#pincode').val()=="")
+        {
+        	$('#error-box ul').append('<li style="color:white;display:block;">Pin Code is required!</li>');
+        	isvalid=false;        	        	
+        }
+        if($('#gender').val()=="")
+        {
+        	$('#error-box ul').append('<li style="color:white;display:block;">Gender is required!</li>');
+        	isvalid=false;        	        	
+        }
+        if($('#rooms').val()=="")
+        {
+        	$('#error-box ul').append('<li style="color:white;display:block;">Rooms is required!</li>');
+        	isvalid=false;        	        	
+        }
+        if($('#occupancy').val()=="")
+        {
+        	$('#error-box ul').append('<li style="color:white;display:block;">Occupancy is required!</li>');
+        	isvalid=false;        	        	
+        }
+        if($('#rent').val()=="")
+        {
+        	$('#error-box ul').append('<li style="color:white;display:block;">Rent is required!</li>');
+        	isvalid=false;        	        	
+        }
+        if($('#size').val()=="")
+        {
+        	$('#error-box ul').append('<li style="color:white;display:block;">Size is required!</li>');
+        	isvalid=false;        	        	
+        }
+
+
+       if(isvalid==false)
+        {
+        	$('#error-box').show();
+        	e.preventDefault();
+        }
+
+        return isvalid;
+
+
+	});
+
+	});
+
+</script>
+
+
+{% endblock %}
+

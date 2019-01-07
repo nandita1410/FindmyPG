@@ -1,0 +1,110 @@
+{% extends 'user/base.html' %}
+{% load static %}
+
+{% block 'main' %}
+<!-- banner -->
+<div class="inside-banner">
+  <div class="container"> 
+    <h2>Rent Paying Guests</h2>
+</div>
+</div>
+<!-- banner -->
+
+
+<div class="container">
+<div class="properties-listing spacer">
+
+<div class="row">
+<div class="col-lg-3 col-sm-4 ">
+
+  <form action="/search/" method="post">
+    {% csrf_token %}
+  <div class="search-form"><h4><span class="glyphicon glyphicon-search"></span> Search for</h4>
+    <input type="text" class="form-control" name="location" placeholder="Location">
+    <div class="row">
+            <div class="col-lg-5">
+              <select name="forgender" class="form-control">
+                <option>Gender</option>
+                <option>Boys</option>
+                <option>Girls</option>
+              </select>
+            </div>
+            <div class="col-lg-7">
+              <select name="price" class="form-control">
+                <option>Price</option>
+                <option value="1">₹1,000 - ₹3,000</option>
+                <option value="2">₹3,000 - ₹6,000</option>
+                <option value="3">₹6,000 - ₹10,000</option>
+                <option value="4">₹10,000 - above</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row">
+          <div class="col-lg-12">
+            <select name="occupancy" class="form-control">
+                <option>Occupancy</option>
+                <option value="1">below - 5</option>
+                <option value="2">5 - 10</option>
+                <option value="3">10 - above</option>
+              </select>
+              </div>
+          </div>
+          <button class="btn btn-primary">Find Now</button>
+  </div>
+  </form>
+
+</div>
+
+<div class="col-lg-9 col-sm-8">
+<div class="sortby clearfix">
+<div class="pull-left result">Showing: {{searchrecords}} of {{totalrecords}} </div>
+  <div class="pull-right">
+  <select class="form-control">
+  <option>Sort by</option>
+  <option>Price: Low to High</option>
+  <option>Price: High to Low</option>
+</select></div>
+
+</div>
+<div class="row">
+    {% for pg in pgs %}
+     <!-- properties -->
+      <div class="col-lg-4 col-sm-6">
+      <div class="properties">
+        <div class="image-holder"><img style="height:300px;width:100%" src="/images/{{pg.image}}" class="img-responsive" alt="properties">
+          <div class="status new">New</div>
+        </div>
+        <h4><a href="property-detail.php">{{ pg.location }}</a></h4>
+        <p class="price">Price: ₹{{ pg.rent }}</p>
+        <div class="listing-detail" style="height:60px;">
+          {% for amn in pg.ameneties %}
+          <label style="padding:5px;color:white;background-color:black;maring:5px;border-radius: 20px">{{amn}}</label> 
+          {% endfor %}
+        </div>
+
+        <a class="btn btn-primary" href="/pg/details/{{pg.id}}">View Details</a>
+      </div>
+      </div>
+    {% endfor %}
+
+
+
+    </div>
+      <!-- properties -->
+      <div class="center">
+
+<ul class="pagination">
+        {% for page in nopages %}
+          <li><a href="/search/{{page}}/">{{page}}</a></li>          
+        {% endfor %}
+        </ul>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+
+{% endblock %}

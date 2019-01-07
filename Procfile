@@ -1,1 +1,1 @@
-web: gunicorn mydeal.wsgi --log-file -
+web: gunicorn findmypg.wsgi --log-file -

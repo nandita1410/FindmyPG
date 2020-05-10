@@ -36,6 +36,8 @@ class PG(models.Model):
     rooms=models.IntegerField()
     intime=models.DateTimeField()
     outtime=models.DateTimeField()
+    description=models.TextField(default="")
+    isverified=models.BooleanField(default=False)
 
 class Ameneties(models.Model):
     pgid=models.ForeignKey(PG,on_delete=models.CASCADE)

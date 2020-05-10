@@ -1,0 +1,87 @@
+{% extends 'owner/base.html' %}
+
+{% load static %}
+
+
+{% block main %}
+<div class="content">
+<div class="container-fluid">
+<div class="col-lg-8 col-md-offset-2">
+<div class="card">
+<div class="header">
+<h4 class="title">Add Images</h4>
+</div>
+<div class="content">
+<form method="post" enctype="multipart/form-data">
+
+{% csrf_token %}
+
+<div class="alert alert-danger" id="error-box">
+	<h3>Please correct following errors:</h3>
+	<ul>
+	</ul>
+</div>
+
+
+{% if success %}
+<div class="alert alert-success">
+    <label style="color:white;">Congratulations! Property Added successfully</label>
+</div>
+{% endif %}
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="form-group">
+		    <label>Upload Images</label>
+		    <input type="file" id="pgimages" name="pgimages" class="form-control border-input" placeholder="Room Area" multiple="">
+		</div>
+	</div>
+</div>
+
+
+<div class="text-center">
+<button id="submit" type="submit" class="btn btn-info btn-fill btn-wd">Upload Images</button>
+</div>
+<div class="clearfix"></div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<script src="{% static 'owner/js/jquery-1.10.2.js' %}" type="text/javascript"></script>
+ 
+<script type="text/javascript">
+	$(function() {
+
+	$('#error-box').hide();
+
+	$('#submit').click(function(e){
+		isvalid=true;
+		$('#error-box ul').html('');
+
+        if($('#pgimages').val()=="")
+        {
+        	$('#error-box ul').append('<li style="color:white;display:block;">Image is required!</li>');
+        	isvalid=false;        	        	
+        }
+   
+       if(isvalid==false)
+        {
+        	$('#error-box').show();
+        	e.preventDefault();
+        }
+
+        return isvalid;
+
+
+	});
+
+	});
+
+</script>
+
+
+{% endblock %}
+

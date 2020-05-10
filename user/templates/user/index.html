@@ -10,7 +10,7 @@
         {% for pg in pgs %}
           <div class="sl-slide" data-orientation="horizontal" data-slice1-rotation="-25" data-slice2-rotation="-25" data-slice1-scale="2" data-slice2-scale="2">
             <div class="sl-slide-inner">
-              <div class="bg-img bg-img-1";"></div>
+              <div class="bg-img bg-img-1";></div>
               <h2>
                 {% for amn in pg.ameneties %}
                 {{amn}}  
@@ -58,25 +58,25 @@
             <div class="col-lg-3 col-sm-3 ">
               <select name="forgender" class="form-control">
                 <option>Gender</option>
-                <option>Male</option>
-                <option>Female</option>
+                <option>Boys</option>
+                <option>Girls</option>
               </select>
             </div>
             <div class="col-lg-3 col-sm-4">
               <select name="price" class="form-control">
                 <option>Price</option>
-                <option>₹1,000 - ₹3,000</option>
-                <option>₹3,000 - ₹6,000</option>
-                <option>₹6,000 - ₹10,000</option>
-                <option>₹10,000 - above</option>
+                <option value="1">₹1,000 - ₹3,000</option>
+                <option value="2">₹3,000 - ₹6,000</option>
+                <option value="3">₹6,000 - ₹10,000</option>
+                <option value="4">₹10,000 - above</option>
               </select>
             </div>
             <div class="col-lg-3 col-sm-4">
             <select name="occupancy" class="form-control">
                 <option>Occupancy</option>
-                <option>below - 5</option>
-                <option>5 - 10</option>
-                <option>10 - above</option>
+                <option value="1">below - 5</option>
+                <option value="2">5 - 10</option>
+                <option value="3">10 - above</option>
               </select>
               </div>
               <div class="col-lg-3 col-sm-4">
@@ -109,9 +109,9 @@
     {% for pg in pgs %}
       <div class="properties" style="min-height: 440px">
         <div class="image-holder"><img style="height:220px;width:100%" src="images/{{pg.image}}" class="img-responsive" alt="properties"/>
-          <div class="status new">New</div>
-        </div>
-        <h4><a href="property-detail.php">{{ pg.location }}</a></h4>
+       <div class="status {% if pg.isverified %}sold{% else %}new{% endif %}" style="text-align: center;font-size:20px;text-transform: capitalize;">{% if pg.isverified %}verified{% else %}unverified{% endif %}</div>
+            </div>
+        <h4><a href="/pg/details/{{pg.id}}">{{ pg.location }}</a></h4>
         <p class="price">Price: ₹{{ pg.rent }}</p>
         
         <div class="listing-detail" style="height:60px;">
@@ -120,7 +120,7 @@
           {% endfor %}
         </div>
 
-        <a class="btn btn-primary" href="/pg/details/{{pg.id}}/">View Details</a>
+        <a class="btn btn-primary" style="{% if not pg.isverified %}background:rgba(190,7,46,0.8){% endif %}" href="/pg/details/{{pg.id}}/">View Details</a>
       </div>
     {% endfor %}
       
@@ -137,7 +137,7 @@
       
       </div>
       
-      <!--
+      
       <div class="col-lg-5 col-lg-offset-1 col-sm-3 recommended">
         <h3>Recommended Properties</h3>
         <div id="myCarousel" class="carousel slide">

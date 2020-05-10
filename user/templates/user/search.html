@@ -20,22 +20,22 @@
   <form action="/search/" method="post">
     {% csrf_token %}
   <div class="search-form"><h4><span class="glyphicon glyphicon-search"></span> Search for</h4>
-    <input type="text" class="form-control" name="location" placeholder="Location">
+    <input type="text" class="form-control" name="location" placeholder="Location" value="{{location}}">
     <div class="row">
             <div class="col-lg-5">
               <select name="forgender" class="form-control">
                 <option>Gender</option>
-                <option>Boys</option>
-                <option>Girls</option>
+                <option {% if forgender == 'Boys' %} selected {% endif %} >Boys</option>
+                <option {% if forgender == 'Girls' %} selected {% endif %}>Girls</option>
               </select>
             </div>
             <div class="col-lg-7">
               <select name="price" class="form-control">
                 <option>Price</option>
-                <option value="1">₹1,000 - ₹3,000</option>
-                <option value="2">₹3,000 - ₹6,000</option>
-                <option value="3">₹6,000 - ₹10,000</option>
-                <option value="4">₹10,000 - above</option>
+                <option value="1" {% if price == '1' %} selected {% endif %}>₹1,000 - ₹3,000</option>
+                <option value="2" {% if price == '2' %} selected {% endif %}>₹3,000 - ₹6,000</option>
+                <option value="3" {% if price == '3' %} selected {% endif %}>₹6,000 - ₹10,000</option>
+                <option value="4" {% if price == '4' %} selected {% endif %}>₹10,000 - above</option>
               </select>
             </div>
           </div>
@@ -44,9 +44,9 @@
           <div class="col-lg-12">
             <select name="occupancy" class="form-control">
                 <option>Occupancy</option>
-                <option value="1">below - 5</option>
-                <option value="2">5 - 10</option>
-                <option value="3">10 - above</option>
+                <option value="1" {% if occupancy == '1' %} selected {% endif %}>below - 5</option>
+                <option value="2" {% if occupancy == '2' %} selected {% endif %}>5 - 10</option>
+                <option value="3" {% if occupancy == '3' %} selected {% endif %}>10 - above</option>
               </select>
               </div>
           </div>
@@ -60,11 +60,26 @@
 <div class="sortby clearfix">
 <div class="pull-left result">Showing: {{searchrecords}} of {{totalrecords}} </div>
   <div class="pull-right">
-  <select class="form-control">
-  <option>Sort by</option>
-  <option>Price: Low to High</option>
-  <option>Price: High to Low</option>
+  <select class="form-control" onchange="Sort(this.value);">
+  <option value="0">Sort by</option>
+  <option value="1">Price: Low to High</option>
+  <option value="2">Price: High to Low</option>
 </select></div>
+
+<script>
+  function Sort(order){
+    url="";
+    switch(order){
+      case "1":
+        url="/search/?sort=price&order=1";
+        break;
+      case "2":
+        url="/search/?sort=price&order=0";
+        break;
+    }
+    location.href=url;
+  }
+</script>
 
 </div>
 <div class="row">
@@ -73,8 +88,8 @@
       <div class="col-lg-4 col-sm-6">
       <div class="properties">
         <div class="image-holder"><img style="height:300px;width:100%" src="/images/{{pg.image}}" class="img-responsive" alt="properties">
-          <div class="status new">New</div>
-        </div>
+           <div class="status {% if pg.isverified %}sold{% else %}new{% endif %}" style="text-align: center;font-size:20px;text-transform: capitalize;">{% if pg.isverified %}verified{% else %}unverified{% endif %}</div>
+       </div>
         <h4><a href="property-detail.php">{{ pg.location }}</a></h4>
         <p class="price">Price: ₹{{ pg.rent }}</p>
         <div class="listing-detail" style="height:60px;">
@@ -83,11 +98,11 @@
           {% endfor %}
         </div>
 
-        <a class="btn btn-primary" href="/pg/details/{{pg.id}}">View Details</a>
+        <a class="btn btn-primary" style="{% if not pg.isverified %}background:rgba(190,7,46,0.8){% endif %}" href="/pg/details/{{pg.id}}/">View Details</a>
+  
       </div>
       </div>
     {% endfor %}
-
 
 
     </div>
@@ -96,7 +111,11 @@
 
 <ul class="pagination">
         {% for page in nopages %}
-          <li><a href="/search/{{page}}/">{{page}}</a></li>          
+           {% if sort != None and order != None %}
+            <li><a href="/search/{{page}}/?sort={{sort}}&order={{order}}">{{page}}</a></li>                     
+           {% else %}
+            <li><a href="/search/{{page}}/">{{page}}</a></li>          
+           {% endif %} 
         {% endfor %}
         </ul>
 </div>

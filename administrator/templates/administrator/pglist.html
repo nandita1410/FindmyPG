@@ -1,0 +1,29 @@
+{% extends 'administrator/base.html' %}
+
+
+{% block main %}
+        
+        <div class="content">
+            <div class="container-fluid">
+                <table class="table">
+                    <tr >
+                        <td style="border-top-style:none;font-size:24px;">Id</td>
+                        <td style="border-top-style:none;font-size:24px;">Address</td>
+                        <td style="border-top-style:none;font-size:24px;">Owner Name</td>
+                        <td style="border-top-style:none;font-size:24px;">Email</td>
+                        <td style="border-top-style:none;font-size:24px;">Verified/Non Verified</td>                        
+                    </tr> 
+                  {% for pg in pgs %}
+                    <tr class="{% if pg.isverified %}success{% else %}danger{% endif %}">
+                        <td>{{pg.id}}</td>
+                        <td>{{pg.address}}</td>
+                        <td>{{pg.ownerid.name}}</td>
+                        <td>{{pg.ownerid.email}}</td>
+                        <td>{% if not pg.isverified %}<a href="/admin/pg/verify/{{pg.id}}/">Verify Property{% else %}Verified Property{% endif %}</a></td>
+                        <td></td>
+                      </td>
+                    </tr>               
+                {% endfor %}
+                </table>                
+    
+{% endblock %}

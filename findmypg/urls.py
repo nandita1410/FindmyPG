@@ -22,9 +22,19 @@ from django.conf.urls.static import static
 from main import views as main
 from owner import views as owner
 from user import views as user
+from administrator import views as adm
 
 urlpatterns = [
     #Admin
+    path(r'admin/', adm.index),
+    path(r'admin/login/', adm.login),
+    path(r'admin/logout/', adm.logout),
+    path(r'admin/pglist/', adm.pglist),
+    path(r'admin/pg/verify/<int:id>/', adm.verify),
+
+
+
+    #Owner
     path(r'owner/', owner.index),
     path(r'owner/register/', owner.register),
     path(r'owner/login/', owner.login),
@@ -32,8 +42,11 @@ urlpatterns = [
     path(r'owner/profile/', owner.profile),
     path(r'owner/profilephoto/', owner.ProfilePhoto),
     path(r'owner/addpg/', owner.addpg),
-    path(r'owner/delete/<int:id>', owner.deletepg),
-    path(r'owner/update/<int:id>', owner.updatepg),
+    path(r'owner/delete/<int:id>/', owner.deletepg),
+    path(r'owner/update/<int:id>/', owner.updatepg),
+    path(r'owner/update/images/<int:id>/', owner.UpdateImages),
+    path(r'owner/image/delete/<int:id>/', owner.DeleteImage),
+    path(r'owner/image/add/<int:id>/', owner.AddImage),
     path(r'owner/pgs/', owner.pglist),
     path(r'owner/notifications/', owner.Notifications),
 
@@ -43,7 +56,7 @@ urlpatterns = [
     path(r'search/',user.search),
     path(r'search/<int:page>/', user.search),
     path(r'pg/details/<int:pgid>/',user.PGDetail),
-    path(r'pg/contact/<int:pgid>',user.Contact),
+    path(r'pg/contact/<int:pgid>/',user.Contact),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

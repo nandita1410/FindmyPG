@@ -1,0 +1,34 @@
+{% extends 'owner/base.html' %}
+
+{% load static %}
+
+
+{% block main %}
+<div class="content">
+	<div class="container-fluid">
+		<div class="col-lg-8 col-md-offset-2">
+			<div class="card">
+				<div class="header">
+					<h4 class="title">Manage Images (<a href="/owner/image/add/{{ pgid }}/">Add Images</a>)</h4>
+				</div>
+				<div class="content">
+					<table class="table">
+						<tr>
+							<td>Id</td>
+							<td>Image</td>
+							<td>Command</td>
+						</tr>
+						{% for image in images %}
+						<tr>
+							<td>{{ image.id }}</td>
+							<td><img style="width:150px;" src="/images/{{ image.image }}"></td>
+							<td><a href="/owner/image/delete/{{ image.id }}/">Delete</a></td>
+						</tr>
+						{% endfor %}
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

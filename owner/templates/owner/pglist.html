@@ -7,20 +7,20 @@
             <div class="container-fluid">
                 <h3><a href="/owner/addpg/">Add New PG</a></h3>
                 <table class="table">
-                    <tr>
-                        <td>Id</td>
-                        <td>Address</td>
-                        <td>Price</td>
-                        <td>Phone</td>
-                        <td>Command</td>                        
+                    <tr >
+                        <td style="border-top-style:none;font-size:24px;">Id</td>
+                        <td style="border-top-style:none;font-size:24px;">Address</td>
+                        <td style="border-top-style:none;font-size:24px;">Price</td>
+                        <td style="border-top-style:none;font-size:24px;">Status</td>
+                        <td style="border-top-style:none;font-size:24px;">Command</td>                        
                     </tr> 
                   {% for pg in pgs %}
-                    <tr>
+                    <tr class="{% if pg.isverified %}success{% else %}danger{% endif %}">
                         <td>{{pg.id}}</td>
                         <td>{{pg.address}}</td>
                         <td>{{pg.rent}}</td>
-                        <td></td>
-                        <td><a  href="/owner/update/{{pg.id}}">Edit</a> | <a href="/owner/delete/{{pg.id}}">Delete</a></td>
+                        <td>{% if not pg.isverified %}Pending for Verification{% else %}Verified Property{% endif %}</a></td>
+                        <td><a  href="/owner/update/{{pg.id}}/">Edit</a> | <a href="/owner/delete/{{pg.id}}/">Delete</a> | <a href="/owner/update/images/{{pg.id}}/">Manage Images</a> </td>
                     </tr>               
                 {% endfor %}
                 </table>                

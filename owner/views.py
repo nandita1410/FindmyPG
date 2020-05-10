@@ -37,6 +37,7 @@ def addpg(request):
 		obj.rooms=request.POST.get('rooms')
 		obj.intime='2018-08-10 08:00'
 		obj.outtime='2018-08-10 23:00'
+		obj.description=request.POST.get('description')
 		obj.ownerid=Owner.objects.get(loginid=loginid)
 
 		obj.save()
@@ -196,6 +197,7 @@ def updatepg(request,id):
 		pg.forgender=request.POST.get('gender')
 		pg.size=request.POST.get('size')
 		pg.rooms=request.POST.get('rooms')
+		pg.description=request.POST.get('description')
 
 		pg.save()
 
@@ -240,3 +242,35 @@ def Notifications(request):
 					data['enquiries'].append(enquiry)
 
 		return render(request,'owner/notifications.html',data)
+
+
+
+def UpdateImages(request,id):
+	pg=PG.objects.get(id=id)
+	pgimages=PGImages.objects.filter(pgid=pg)
+	return render(request,'owner/updateimage.html', {'pgid':id, 'images':pgimages}) 
+
+
+def DeleteImage(request,id):
+	try:
+		pgimage=PGImages.objects.get(id=id)
+		pgid=pgimage.pgid.id
+		pgimage.delete()
+		return redirect("/owner/update/images/" + str(pgid) + "/")
+	except Exception as e:
+		return HttpResponse(e)
+
+
+def AddImage(request,id):
+	if(request.method=='GET'):
+		return render(request,'owner/addimage.html', None)
+	else:
+		pg=PG.objects.get(id=id)
+		files=request.FILES.getlist('pgimages')
+		for f in files:
+			pgimages=PGImages()
+			pgimages.pgid=pg
+			pgimages.image=f
+			pgimages.save()
+		return redirect("/owner/update/images/" + str(id) + "/")
+

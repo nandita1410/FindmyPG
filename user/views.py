@@ -35,8 +35,19 @@ def index(request):
 
 def search(request,page=1):
 
+	sort=request.GET.get('sort');
+	order=request.GET.get('order');
+
 	if(request.method=='GET'):
-		pgs=PG.objects.filter()
+		if(sort!=None and order=="1"):
+			print("Case 1")
+			pgs=PG.objects.filter().order_by('rent')
+		elif(sort!=None and order=="0"):
+			print("Case 2")
+			pgs=PG.objects.filter().order_by('-rent')
+		else:			
+			print("Case 3")
+			pgs=PG.objects.filter()
 
 		totalrecords=len(PG.objects.filter())
 		searchrecords=len(pgs)
@@ -72,13 +83,25 @@ def search(request,page=1):
 				pgs[i].ameneties.append('Parking')
 
 
-		data={'pgs':pgs,'totalrecords':totalrecords,'searchrecords':searchrecords,'nopages':range(1,nopages+1)}
+		data={'pgs':pgs,'totalrecords':totalrecords,'searchrecords':searchrecords,'nopages':range(1,nopages+1),'sort':sort, 'order': order}
 		return render(request,'user/search.html',data)
 	else:
-		location=request.POST.get('location')
-		gender=request.POST.get('forgender')
-		price=request.POST.get('price')
-		occupancy=request.POST.get('occupancy')
+
+		if(sort!=None and order=="1"):
+			print("Case 1")
+			pgs=PG.objects.filter().order_by('rent')
+		elif(sort!=None and order=="0"):
+			print("Case 2")
+			pgs=PG.objects.filter().order_by('-rent')
+		else:			
+			print("Case 3")
+			pgs=PG.objects.filter()
+
+
+		location=request.POST.get('location','')
+		gender=request.POST.get('forgender','')
+		price=request.POST.get('price','')
+		occupancy=request.POST.get('occupancy','')
 
 		if(location!=""):			
 			pgLocation=set(PG.objects.filter(location=location))
@@ -169,7 +192,7 @@ def search(request,page=1):
 				pgs[i].ameneties.append('Parking')
 
 
-		data={'pgs':pgs,'totalrecords':totalrecords,'searchrecords':searchrecords,'nopages':range(1,nopages+1)}
+		data={'pgs':pgs,'totalrecords':totalrecords,'searchrecords':searchrecords,'nopages':range(1,nopages+1), 'sort':sort, 'order': order, 'location':location,'forgender':gender,'price':price,'occupancy':occupancy}
 		return render(request,'user/search.html',data)
 
 
@@ -213,3 +236,4 @@ def Contact(request,pgid):
 	contact.datetime='2018-01-01'
 	contact.save()
 	return redirect("/")
+
